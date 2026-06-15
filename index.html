@@ -124,7 +124,7 @@ nav{
   position:relative;
   overflow:hidden;
   text-align:center;
-  padding:120px 20px;
+  padding:96px 20px;
   background:linear-gradient(#fff,#e0f2fe);
 }
 
@@ -188,10 +188,579 @@ nav{
   color:#0284c7;
 }
 
+.secret-toast{
+  position:fixed;
+  left:50%;
+  top:22%;
+  z-index:70;
+  padding:18px 26px;
+  background:linear-gradient(135deg,#0284c7,#075985);
+  color:white;
+  border:2px solid rgba(255,255,255,0.7);
+  border-radius:16px;
+  font-size:20px;
+  font-weight:800;
+  text-align:center;
+  box-shadow:0 18px 45px rgba(2,132,199,0.38);
+  opacity:0;
+  transform:translate(-50%,-8px) scale(.94);
+  pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease;
+}
+
+.secret-toast.show{
+  opacity:1;
+  transform:translate(-50%,0) scale(1);
+}
+
+body.pressure-mode .secret-toast::after{
+  content:"Hidden wash sequence unlocked";
+  display:block;
+  margin-top:5px;
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  opacity:.85;
+}
+
+.secret-meter{
+  display:block;
+  width:210px;
+  height:7px;
+  margin:12px auto 0;
+  overflow:hidden;
+  background:rgba(255,255,255,0.24);
+  border-radius:999px;
+}
+
+.secret-meter span{
+  display:block;
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,#e0f2fe,#ffffff,#7dd3fc);
+  border-radius:999px;
+}
+
+body.pressure-mode .secret-meter span{
+  animation:meterFill 4.2s ease both;
+}
+
+.secret-cleaner{
+  position:fixed;
+  inset:0;
+  z-index:66;
+  overflow:hidden;
+  pointer-events:none;
+  opacity:0;
+}
+
+body.pressure-mode .secret-cleaner{
+  opacity:1;
+}
+
+.secret-cleaner canvas{
+  position:absolute;
+  inset:0;
+}
+
+.game-launch{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:50;
+  display:none;
+  padding:12px 14px;
+  border:0;
+  border-radius:999px;
+  background:#0284c7;
+  color:white;
+  font:inherit;
+  font-size:14px;
+  font-weight:800;
+  box-shadow:0 12px 26px rgba(2,132,199,.26);
+  cursor:pointer;
+}
+
+body.game-unlocked .game-launch{
+  display:block;
+}
+
+.game-badge{
+  position:fixed;
+  left:18px;
+  bottom:72px;
+  z-index:50;
+  display:none;
+  padding:9px 12px;
+  border:1px solid #7dd3fc;
+  border-radius:12px;
+  background:white;
+  color:#0369a1;
+  font-size:12px;
+  font-weight:800;
+  box-shadow:0 10px 24px rgba(2,132,199,.18);
+}
+
+body.game-unlocked.game-complete .game-badge{
+  display:block;
+}
+
+.game-overlay{
+  position:fixed;
+  inset:0;
+  z-index:80;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(8,47,73,.72);
+}
+
+body.game-open{
+  overflow:hidden;
+}
+
+body.game-open .game-overlay{
+  display:flex;
+}
+
+.game-card{
+  width:min(920px,100%);
+  background:white;
+  border:1px solid #bae6fd;
+  border-radius:16px;
+  box-shadow:0 24px 70px rgba(0,0,0,.28);
+  overflow:hidden;
+}
+
+.game-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:16px 18px;
+  border-bottom:1px solid #e0f2fe;
+}
+
+.game-top h2{
+  margin:0;
+  text-align:left;
+  font-size:24px;
+}
+
+.game-top h2::after{
+  display:none;
+}
+
+.game-close{
+  border:0;
+  border-radius:10px;
+  background:#e0f2fe;
+  color:#0369a1;
+  padding:9px 12px;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.game-body{
+  padding:18px;
+}
+
+.game-status{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+  color:#555;
+  font-weight:700;
+}
+
+.game-level{
+  min-width:150px;
+  color:#0369a1;
+}
+
+.game-progress{
+  flex:1;
+  height:10px;
+  overflow:hidden;
+  background:#e0f2fe;
+  border-radius:999px;
+}
+
+.game-progress span{
+  display:block;
+  width:0;
+  height:100%;
+  background:#0284c7;
+  border-radius:999px;
+}
+
+#wash-game{
+  width:100%;
+  height:min(58vh,460px);
+  display:block;
+  border:1px solid #bae6fd;
+  border-radius:12px;
+  background:#e0f2fe;
+  touch-action:none;
+  cursor:crosshair;
+}
+
+.game-hint{
+  margin-top:10px;
+  color:#555;
+  font-size:14px;
+  text-align:center;
+}
+
+.game-win{
+  display:none;
+  margin-top:12px;
+  padding:14px;
+  border:1px solid #7dd3fc;
+  border-radius:12px;
+  background:#e0f2fe;
+  color:#075985;
+  text-align:center;
+  font-weight:800;
+}
+
+.game-win.show{
+  display:block;
+}
+
+.game-reward{
+  display:none;
+  margin:18px auto 8px;
+  text-align:center;
+}
+
+.game-reward.show{
+  display:block;
+  animation:badgeReveal .75s cubic-bezier(.2,.9,.25,1.25) both;
+}
+
+.reward-medal{
+  position:relative;
+  width:142px;
+  height:142px;
+  margin:0 auto 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:8px solid #facc15;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 28%,#7dd3fc,#0284c7 58%,#075985);
+  color:white;
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.35),0 14px 30px rgba(2,132,199,.3);
+}
+
+.reward-medal::before,
+.reward-medal::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:105px;
+  width:44px;
+  height:76px;
+  background:#075985;
+  clip-path:polygon(0 0,100% 0,82% 100%,50% 78%,18% 100%);
+}
+
+.reward-medal::before{
+  left:15px;
+  transform:rotate(12deg);
+}
+
+.reward-medal::after{
+  right:15px;
+  transform:rotate(-12deg);
+}
+
+.reward-medal span{
+  max-width:95px;
+  font-size:18px;
+  font-weight:800;
+  line-height:1.05;
+  text-transform:uppercase;
+}
+
+.game-reward strong{
+  display:block;
+  color:#075985;
+  font-size:20px;
+}
+
+.game-reward p{
+  margin-top:5px;
+  color:#555;
+  font-size:14px;
+}
+
+@keyframes badgeReveal{
+  0%{opacity:0;transform:scale(.35) rotate(-14deg);}
+  65%{opacity:1;transform:scale(1.08) rotate(3deg);}
+  100%{opacity:1;transform:scale(1) rotate(0);}
+}
+
+.game-actions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:12px;
+}
+
+.game-reset{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  background:#0284c7;
+  color:white;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.game-next{
+  display:none;
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  background:#075985;
+  color:white;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.game-next.show{
+  display:block;
+}
+
+.game-skip{
+  display:none;
+  border:1px solid #7dd3fc;
+  border-radius:10px;
+  padding:10px 14px;
+  background:white;
+  color:#0369a1;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.game-skip.show{
+  display:block;
+  animation:skipReveal .25s ease both;
+}
+
+@keyframes skipReveal{
+  from{opacity:0;transform:translateY(5px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.confetti-piece{
+  position:fixed;
+  top:-24px;
+  z-index:95;
+  width:10px;
+  height:18px;
+  border-radius:2px;
+  pointer-events:none;
+  animation:confettiFall 2.4s ease-in forwards;
+}
+
+@keyframes confettiFall{
+  to{
+    transform:translate3d(var(--drift),110vh,0) rotate(760deg);
+    opacity:.2;
+  }
+}
+
+@media(max-width:600px){
+  .game-status{
+    flex-wrap:wrap;
+  }
+
+  .game-level{
+    width:100%;
+  }
+}
+
+body.pressure-mode .hero{
+  background:linear-gradient(135deg,#dff6ff,#bae6fd 55%,#e0f2fe);
+}
+
+body.pressure-mode .service,
+body.pressure-mode .stat,
+body.pressure-mode .detail-panel,
+body.pressure-mode .contact-card,
+body.pressure-mode .insta-box,
+body.pressure-mode .slider{
+  border-color:#38bdf8;
+  box-shadow:0 18px 42px rgba(2,132,199,0.2);
+}
+
+body.pressure-mode h2::after{
+  width:130px;
+}
+
+body.pressure-mode .btn,
+body.pressure-mode .menu-toggle,
+body.pressure-mode .handle::after,
+body.pressure-mode .stat{
+  animation:secretPulse .7s ease-in-out 4;
+}
+
+body.pressure-mode .service,
+body.pressure-mode .stat,
+body.pressure-mode .detail-panel,
+body.pressure-mode .contact-card,
+body.pressure-mode .insta-box,
+body.pressure-mode .slider{
+  position:relative;
+  overflow:hidden;
+}
+
+body.pressure-mode .service::after,
+body.pressure-mode .stat::after,
+body.pressure-mode .detail-panel::after,
+body.pressure-mode .contact-card::after,
+body.pressure-mode .insta-box::after,
+body.pressure-mode .slider::after{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  z-index:8;
+  background:linear-gradient(110deg,transparent 0 35%,rgba(255,255,255,0.75) 46%,rgba(56,189,248,0.45) 52%,transparent 65% 100%);
+  transform:translateX(-120%) skewX(-14deg);
+  animation:cleanScan 1.3s ease-in-out both;
+  pointer-events:none;
+}
+
+body.pressure-mode .service:nth-child(2)::after,
+body.pressure-mode .stat:nth-child(2)::after{
+  animation-delay:.12s;
+}
+
+body.pressure-mode .service:nth-child(3)::after,
+body.pressure-mode .stat:nth-child(3)::after{
+  animation-delay:.24s;
+}
+
+body.pressure-mode .service:nth-child(4)::after,
+body.pressure-mode .stat:nth-child(4)::after{
+  animation-delay:.36s;
+}
+
+body.pressure-mode{
+  animation:pageFlash 3.2s ease both;
+}
+
+body.pressure-mode::after{
+  content:"";
+  position:fixed;
+  top:-120%;
+  left:0;
+  width:100%;
+  height:120%;
+  z-index:55;
+  background:linear-gradient(to bottom,rgba(186,230,253,0.86),rgba(56,189,248,0.74) 45%,rgba(2,132,199,0.58) 82%,transparent 100%);
+  backdrop-filter:blur(1px);
+  pointer-events:none;
+  animation:secretWash 3.2s cubic-bezier(.4,0,.2,1) both;
+}
+
+body.pressure-mode::before{
+  content:"WASH MODE\A UNLOCKED";
+  white-space:pre;
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:65;
+  padding:12px 14px 12px 44px;
+  background:linear-gradient(135deg,rgba(2,132,199,.96),rgba(7,89,133,.96));
+  color:white;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:14px;
+  font-size:11px;
+  font-weight:800;
+  line-height:1.25;
+  letter-spacing:.09em;
+  box-shadow:0 14px 30px rgba(2,132,199,0.32);
+  animation:modeBadge 4.8s ease both;
+}
+
+.secret-cleaner::before{
+  content:"";
+  position:fixed;
+  right:126px;
+  bottom:29px;
+  z-index:66;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#e0f2fe;
+  box-shadow:inset 0 -5px 0 rgba(2,132,199,.25),0 0 0 3px rgba(255,255,255,.35);
+  opacity:0;
+  pointer-events:none;
+}
+
+body.pressure-mode .secret-cleaner::before{
+  animation:modeBadge 4.8s ease both;
+}
+
+@keyframes secretPulse{
+  0%,100%{box-shadow:0 5px 14px rgba(2,132,199,0.22);}
+  50%{box-shadow:0 0 0 6px rgba(56,189,248,0.24),0 14px 30px rgba(2,132,199,0.34);}
+}
+
+@keyframes secretWash{
+  0%{
+    opacity:0;
+    transform:translateY(0);
+  }
+  18%{
+    opacity:1;
+  }
+  55%{
+    opacity:1;
+    transform:translateY(92%);
+  }
+  100%{
+    opacity:0;
+    transform:translateY(112%);
+  }
+}
+
+@keyframes pageFlash{
+  0%,100%{box-shadow:inset 0 0 0 rgba(2,132,199,0);}
+  20%,80%{box-shadow:inset 0 0 0 10px rgba(2,132,199,0.38);}
+}
+
+@keyframes cleanScan{
+  from{transform:translateX(-120%) skewX(-14deg);}
+  to{transform:translateX(120%) skewX(-14deg);}
+}
+
+@keyframes modeBadge{
+  0%{opacity:0;transform:translateY(12px);}
+  14%,82%{opacity:1;transform:translateY(0);}
+  100%{opacity:0;transform:translateY(12px);}
+}
+
+@keyframes meterFill{
+  from{width:0;}
+  to{width:100%;}
+}
+
 /* STATS */
 .stats{
   max-width:1100px;
-  margin:28px auto 0;
+  margin:22px auto 0;
   padding:0 20px;
   position:relative;
   z-index:2;
@@ -230,7 +799,7 @@ nav{
 
 /* SECTION */
 .section{
-  padding:70px 20px;
+  padding:56px 20px;
   max-width:1100px;
   margin:auto;
 }
@@ -459,6 +1028,59 @@ h2::after{
   color:#555;
 }
 
+/* DETAILS */
+.details-band{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 20px 56px;
+}
+
+.details-grid{
+  max-width:850px;
+  margin:auto;
+}
+
+.detail-panel{
+  background:white;
+  border:1px solid #e0f2fe;
+  border-radius:14px;
+  padding:28px;
+  box-shadow:0 8px 24px rgba(15,23,42,0.06);
+}
+
+.detail-panel h2{
+  margin-bottom:26px;
+  text-align:center;
+}
+
+.detail-panel h2::after{
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.trust-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.trust-item{
+  padding:16px;
+  background:#f8fbff;
+  border:1px solid #e0f2fe;
+  border-radius:12px;
+}
+
+.trust-item strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.trust-item span{
+  color:#555;
+  font-size:14px;
+}
+
 /* ABOUT */
 .about{
   background:white;
@@ -472,7 +1094,7 @@ h2::after{
 /* INSTAGRAM */
 .insta{
   text-align:center;
-  padding-top:40px;
+  padding-top:34px;
 }
 
 .insta-box{
@@ -523,7 +1145,7 @@ h2::after{
 .contact{
   background:#f8fbff;
   color:#111;
-  padding:70px 20px;
+  padding:58px 20px;
 }
 
 .contact-card{
@@ -657,7 +1279,7 @@ footer{
   }
 
   .hero{
-    padding:90px 18px;
+    padding:72px 18px;
   }
 
   .hero h1{
@@ -685,6 +1307,14 @@ footer{
     grid-template-columns:1fr;
   }
 
+  .details-band{
+    padding-bottom:42px;
+  }
+
+  .trust-list{
+    grid-template-columns:1fr;
+  }
+
   .buttons .btn,
   .hero .btn{
     width:100%;
@@ -708,6 +1338,43 @@ footer{
 </head>
 
 <body>
+<div class="secret-toast" role="status" aria-live="polite">
+  Pressure mode activated
+  <span class="secret-meter" aria-hidden="true"><span></span></span>
+</div>
+<div class="secret-cleaner" aria-hidden="true">
+  <canvas id="secret-clean-canvas"></canvas>
+</div>
+<button class="game-launch" type="button">Play Wash Game</button>
+<div class="game-badge" role="status">Wash Master Badge</div>
+<div class="game-overlay" aria-hidden="true">
+  <div class="game-card" role="dialog" aria-modal="true" aria-labelledby="game-title">
+    <div class="game-top">
+      <h2 id="game-title">Pressure Wash Challenge</h2>
+      <button class="game-close" type="button" aria-label="Close game">Close</button>
+    </div>
+    <div class="game-body">
+      <div class="game-status">
+        <span class="game-level">Level 1: Driveway</span>
+        <div class="game-progress" aria-hidden="true"><span></span></div>
+        <strong class="game-percent">0%</strong>
+      </div>
+      <canvas id="wash-game" aria-label="Pressure washing game"></canvas>
+      <p class="game-hint">Drag or swipe across the dirt to clean the surface.</p>
+      <div class="game-win" role="status"></div>
+      <div class="game-reward" role="status" aria-live="polite">
+        <div class="reward-medal" aria-hidden="true"><span>Wash Master</span></div>
+        <strong>Badge Earned</strong>
+        <p>You completed every pressure-washing job.</p>
+      </div>
+      <div class="game-actions">
+        <button class="game-reset" type="button">Restart Level</button>
+        <button class="game-next" type="button">Next Level</button>
+        <button class="game-skip" type="button">Skip Level</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -719,6 +1386,7 @@ footer{
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
     <div class="nav-links" id="nav-links">
       <a href="#services">Services</a>
+      <a href="#why">Why Us</a>
       <a href="#about">About</a>
       <a href="#work">Work</a>
       <a href="#contact">Contact</a>
@@ -812,6 +1480,34 @@ footer{
       </div>
       <h3>Trash Can Cleaning</h3>
       <p>We eliminate odors, bacteria, and buildup, leaving your trash cans clean and sanitary.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- DETAILS -->
+<div class="details-band" id="why">
+  <div class="details-grid">
+    <div class="detail-panel">
+      <h2>Why Choose Us</h2>
+      <div class="trust-list">
+        <div class="trust-item">
+          <strong>Student-Owned</strong>
+          <span>Built by two local students working hard and learning as we grow.</span>
+        </div>
+        <div class="trust-item">
+          <strong>Free Quotes</strong>
+          <span>Reach out with what you need cleaned and we will give you a clear quote.</span>
+        </div>
+        <div class="trust-item">
+          <strong>Careful Work</strong>
+          <span>We take our time and use the right approach for each surface.</span>
+        </div>
+        <div class="trust-item">
+          <strong>Local Service</strong>
+          <span>Serving San Antonio homes and nearby neighborhoods.</span>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -928,6 +1624,962 @@ document.querySelectorAll(".nav-links a").forEach(link=>{
     navMenu.classList.remove("open");
     menuToggle.setAttribute("aria-expanded","false");
   });
+});
+
+const logo=document.querySelector(".logo");
+const secretToast=document.querySelector(".secret-toast");
+const cleanCanvas=document.querySelector("#secret-clean-canvas");
+const cleanCtx=cleanCanvas.getContext("2d");
+const gameLaunch=document.querySelector(".game-launch");
+const gameOverlay=document.querySelector(".game-overlay");
+const gameClose=document.querySelector(".game-close");
+const gameReset=document.querySelector(".game-reset");
+const gameCanvas=document.querySelector("#wash-game");
+const gameCtx=gameCanvas.getContext("2d");
+const gameProgress=document.querySelector(".game-progress span");
+const gamePercent=document.querySelector(".game-percent");
+const gameWin=document.querySelector(".game-win");
+const gameReward=document.querySelector(".game-reward");
+const gameLevelLabel=document.querySelector(".game-level");
+const gameNext=document.querySelector(".game-next");
+const gameSkip=document.querySelector(".game-skip");
+let secretTaps=0;
+let secretTapTimer;
+let logoNavTimer;
+let cleanAnimation;
+let gameDirt;
+let gameDirtCtx;
+let gameCleaning=false;
+let gameWon=false;
+let gameWidth=0;
+let gameHeight=0;
+let gameRatio=1;
+let gameLevel=0;
+let cleanedCells=new Set();
+let gameTargetCells=new Set();
+let gameSkipTimer;
+const gameColumns=28;
+const gameRows=16;
+const gameLevels=[
+  {
+    name:"Driveway",
+    type:"concrete",
+    dirt:"rgba(67,52,36,.78)",
+    spot:"rgba(35,28,20,.72)",
+    radius:.09
+  },
+  {
+    name:"House Siding",
+    type:"siding",
+    dirt:"rgba(62,78,54,.72)",
+    spot:"rgba(31,55,35,.72)",
+    radius:.082
+  },
+  {
+    name:"Flagstone Patio",
+    type:"pavers",
+    dirt:"rgba(78,57,42,.8)",
+    spot:"rgba(48,34,25,.76)",
+    radius:.076
+  },
+  {
+    name:"Trash Bin",
+    type:"bin",
+    dirt:"rgba(72,64,42,.82)",
+    spot:"rgba(38,36,25,.8)",
+    radius:.07
+  }
+];
+
+function saveSecretState(key){
+  try{
+    localStorage.setItem(key,"1");
+  }catch(error){
+    // The game still works when browser storage is unavailable.
+  }
+}
+
+function loadSecretState(){
+  try{
+    if(localStorage.getItem("gfGameComplete")==="1"){
+      document.body.classList.add("game-complete");
+    }
+  }catch(error){
+    // Ignore private browsing storage restrictions.
+  }
+}
+
+let flagstoneCache;
+
+function clipFlagstonePolygon(polygon,a,b,c){
+  const clipped=[];
+  for(let i=0;i<polygon.length;i+=1){
+    const current=polygon[i];
+    const previous=polygon[(i+polygon.length-1)%polygon.length];
+    const currentInside=a*current.x+b*current.y<=c;
+    const previousInside=a*previous.x+b*previous.y<=c;
+
+    if(currentInside!==previousInside){
+      const dx=current.x-previous.x;
+      const dy=current.y-previous.y;
+      const denominator=a*dx+b*dy;
+      const t=denominator===0?0:(c-a*previous.x-b*previous.y)/denominator;
+      clipped.push({x:previous.x+dx*t,y:previous.y+dy*t});
+    }
+    if(currentInside){
+      clipped.push(current);
+    }
+  }
+  return clipped;
+}
+
+function getFlagstonePolygons(){
+  if(flagstoneCache&&flagstoneCache.width===gameWidth&&flagstoneCache.height===gameHeight){
+    return flagstoneCache.polygons;
+  }
+
+  const seeds=[
+    [.06,.08],[.25,.05],[.46,.1],[.7,.06],[.91,.11],
+    [.13,.3],[.36,.27],[.58,.34],[.83,.29],
+    [.05,.53],[.27,.52],[.48,.56],[.72,.51],[.94,.55],
+    [.14,.78],[.39,.82],[.61,.76],[.84,.82],
+    [.04,.96],[.28,.96],[.53,.95],[.76,.96],[.97,.94]
+  ].map(point=>({x:point[0]*gameWidth,y:point[1]*gameHeight}));
+
+  const polygons=seeds.map(seed=>{
+    let polygon=[
+      {x:-10,y:-10},
+      {x:gameWidth+10,y:-10},
+      {x:gameWidth+10,y:gameHeight+10},
+      {x:-10,y:gameHeight+10}
+    ];
+    seeds.forEach(other=>{
+      if(other===seed||polygon.length===0){
+        return;
+      }
+      const a=2*(other.x-seed.x);
+      const b=2*(other.y-seed.y);
+      const c=other.x*other.x+other.y*other.y-seed.x*seed.x-seed.y*seed.y;
+      polygon=clipFlagstonePolygon(polygon,a,b,c);
+    });
+    return polygon;
+  });
+
+  flagstoneCache={width:gameWidth,height:gameHeight,polygons};
+  return polygons;
+}
+
+function traceNaturalFlagstone(ctx,stone,index){
+  const center=stone.reduce((total,point)=>({
+    x:total.x+point.x/stone.length,
+    y:total.y+point.y/stone.length
+  }),{x:0,y:0});
+  const points=[];
+
+  stone.forEach((point,edgeIndex)=>{
+    const next=stone[(edgeIndex+1)%stone.length];
+    const dx=next.x-point.x;
+    const dy=next.y-point.y;
+    const length=Math.max(1,Math.hypot(dx,dy));
+    const normalX=-dy/length;
+    const normalY=dx/length;
+    const middleX=(point.x+next.x)/2;
+    const middleY=(point.y+next.y)/2;
+    const pointsTowardCenter=(center.x-middleX)*normalX+(center.y-middleY)*normalY>0;
+    const outward=pointsTowardCenter?-1:1;
+    const style=(index*7+edgeIndex*3)%5;
+
+    points.push({x:point.x,y:point.y,curve:false});
+    if(style===0||style===3){
+      const bulge=outward*(7+((index+edgeIndex*5)%10));
+      points.push({
+        x:middleX+normalX*bulge,
+        y:middleY+normalY*bulge,
+        curve:true
+      });
+    }else{
+      const chipA=outward*(3+((index+edgeIndex)%7));
+      const chipB=-outward*(2+((index*3+edgeIndex)%6));
+      points.push({
+        x:point.x+dx*.34+normalX*chipA,
+        y:point.y+dy*.34+normalY*chipA,
+        curve:false
+      });
+      points.push({
+        x:point.x+dx*.67+normalX*chipB,
+        y:point.y+dy*.67+normalY*chipB,
+        curve:false
+      });
+    }
+  });
+
+  ctx.beginPath();
+  ctx.moveTo(points[0].x,points[0].y);
+  for(let i=1;i<points.length;i+=1){
+    const point=points[i];
+    if(point.curve){
+      const next=points[(i+1)%points.length];
+      ctx.quadraticCurveTo(point.x,point.y,next.x,next.y);
+      i+=1;
+    }else{
+      ctx.lineTo(point.x,point.y);
+    }
+  }
+  ctx.closePath();
+}
+
+function drawGameSurface(){
+  const level=gameLevels[gameLevel];
+  if(level.type==="siding"){
+    const base=gameCtx.createLinearGradient(0,0,gameWidth,gameHeight);
+    base.addColorStop(0,"#f8fafc");
+    base.addColorStop(1,"#d6dee3");
+    gameCtx.fillStyle=base;
+    gameCtx.fillRect(0,0,gameWidth,gameHeight);
+
+    const boardHeight=Math.max(38,gameHeight/10);
+    for(let y=boardHeight;y<gameHeight;y+=boardHeight){
+      gameCtx.fillStyle="rgba(15,23,42,.08)";
+      gameCtx.fillRect(0,y-3,gameWidth,5);
+      gameCtx.fillStyle="rgba(255,255,255,.72)";
+      gameCtx.fillRect(0,y+2,gameWidth,2);
+    }
+
+    const windowX=gameWidth*.62;
+    const windowY=gameHeight*.12;
+    const windowW=gameWidth*.25;
+    const windowH=gameHeight*.46;
+    gameCtx.fillStyle="#f8fafc";
+    gameCtx.fillRect(windowX-12,windowY-12,windowW+24,windowH+24);
+    const glass=gameCtx.createLinearGradient(windowX,windowY,windowX+windowW,windowY+windowH);
+    glass.addColorStop(0,"#7dd3fc");
+    glass.addColorStop(1,"#164e63");
+    gameCtx.fillStyle=glass;
+    gameCtx.fillRect(windowX,windowY,windowW,windowH);
+    gameCtx.strokeStyle="rgba(255,255,255,.8)";
+    gameCtx.lineWidth=6;
+    gameCtx.beginPath();
+    gameCtx.moveTo(windowX+windowW/2,windowY);
+    gameCtx.lineTo(windowX+windowW/2,windowY+windowH);
+    gameCtx.moveTo(windowX,windowY+windowH/2);
+    gameCtx.lineTo(windowX+windowW,windowY+windowH/2);
+    gameCtx.stroke();
+    gameCtx.fillStyle="#64748b";
+    gameCtx.fillRect(0,gameHeight*.92,gameWidth,gameHeight*.08);
+  }else if(level.type==="pavers"){
+    const base=gameCtx.createLinearGradient(0,0,0,gameHeight);
+    base.addColorStop(0,"#5e594f");
+    base.addColorStop(1,"#403c35");
+    gameCtx.fillStyle=base;
+    gameCtx.fillRect(0,0,gameWidth,gameHeight);
+
+    const stones=getFlagstonePolygons();
+    const stoneColors=[
+      ["#c3aa89","#91765c"],["#b79b78","#806951"],["#d0b692","#9b7d5f"],
+      ["#a98e70","#755f4b"],["#c7aa83","#8d7258"],["#b49a7c","#786552"]
+    ];
+    gameCtx.lineJoin="round";
+    stones.forEach((stone,index)=>{
+      traceNaturalFlagstone(gameCtx,stone,index);
+      const colors=stoneColors[index%stoneColors.length];
+      const stoneShade=gameCtx.createLinearGradient(0,0,gameWidth*.35,gameHeight*.3);
+      stoneShade.addColorStop(0,colors[0]);
+      stoneShade.addColorStop(1,colors[1]);
+      gameCtx.fillStyle=stoneShade;
+      gameCtx.fill();
+      gameCtx.strokeStyle="#f3eee5";
+      gameCtx.lineWidth=11;
+      gameCtx.stroke();
+      gameCtx.strokeStyle="rgba(112,94,75,.3)";
+      gameCtx.lineWidth=2;
+      gameCtx.stroke();
+
+      const center=stone.reduce((total,point)=>({
+        x:total.x+point.x/stone.length,
+        y:total.y+point.y/stone.length
+      }),{x:0,y:0});
+      gameCtx.save();
+      gameCtx.clip();
+      for(let speck=0;speck<34;speck+=1){
+        const angle=(speck*2.399)+(index*.71);
+        const distance=7+((speck*29+index*17)%70);
+        const x=center.x+Math.cos(angle)*distance;
+        const y=center.y+Math.sin(angle)*distance*.62;
+        gameCtx.fillStyle=speck%4?"rgba(67,52,40,.16)":"rgba(255,239,213,.2)";
+        gameCtx.beginPath();
+        gameCtx.arc(x,y,1+(speck%4)*.7,0,Math.PI*2);
+        gameCtx.fill();
+      }
+
+      if(index%4===1){
+        gameCtx.strokeStyle="rgba(73,55,42,.32)";
+        gameCtx.lineWidth=1.5;
+        gameCtx.beginPath();
+        gameCtx.moveTo(center.x-24,center.y-12);
+        gameCtx.lineTo(center.x-5,center.y+2);
+        gameCtx.lineTo(center.x+17,center.y-3);
+        gameCtx.stroke();
+      }
+      gameCtx.restore();
+    });
+  }else if(level.type==="bin"){
+    const wall=gameCtx.createLinearGradient(0,0,0,gameHeight);
+    wall.addColorStop(0,"#d9e4e8");
+    wall.addColorStop(1,"#9baeb7");
+    gameCtx.fillStyle=wall;
+    gameCtx.fillRect(0,0,gameWidth,gameHeight);
+    gameCtx.fillStyle="#66757e";
+    gameCtx.fillRect(0,gameHeight*.84,gameWidth,gameHeight*.16);
+
+    const binX=gameWidth*.2;
+    const binY=gameHeight*.12;
+    const binW=gameWidth*.6;
+    const binH=gameHeight*.72;
+    const binBody=gameCtx.createLinearGradient(binX,0,binX+binW,0);
+    binBody.addColorStop(0,"#166534");
+    binBody.addColorStop(.5,"#22a45a");
+    binBody.addColorStop(1,"#14532d");
+    gameCtx.fillStyle=binBody;
+    gameCtx.beginPath();
+    gameCtx.moveTo(binX+binW*.08,binY+binH*.16);
+    gameCtx.lineTo(binX+binW*.92,binY+binH*.16);
+    gameCtx.lineTo(binX+binW*.82,binY+binH);
+    gameCtx.lineTo(binX+binW*.18,binY+binH);
+    gameCtx.closePath();
+    gameCtx.fill();
+
+    gameCtx.fillStyle="#0f3f27";
+    gameCtx.beginPath();
+    gameCtx.roundRect(binX,binY,binW,binH*.2,12);
+    gameCtx.fill();
+    gameCtx.fillStyle="#111827";
+    gameCtx.fillRect(binX+binW*.33,binY+binH*.04,binW*.34,binH*.04);
+    gameCtx.fillStyle="rgba(255,255,255,.14)";
+    for(let i=1;i<6;i+=1){
+      gameCtx.fillRect(binX+binW*(.12+i*.13),binY+binH*.23,binW*.035,binH*.65);
+    }
+    gameCtx.fillStyle="#111827";
+    gameCtx.beginPath();
+    gameCtx.arc(binX+binW*.2,binY+binH,binH*.075,0,Math.PI*2);
+    gameCtx.arc(binX+binW*.8,binY+binH,binH*.075,0,Math.PI*2);
+    gameCtx.fill();
+  }else{
+    const sky=gameCtx.createLinearGradient(0,0,0,gameHeight*.28);
+    sky.addColorStop(0,"#b9e6fa");
+    sky.addColorStop(1,"#eef9ff");
+    gameCtx.fillStyle=sky;
+    gameCtx.fillRect(0,0,gameWidth,gameHeight*.28);
+    gameCtx.fillStyle="#557d3b";
+    gameCtx.fillRect(0,gameHeight*.2,gameWidth,gameHeight*.2);
+
+    gameCtx.fillStyle="#d6c0a3";
+    gameCtx.fillRect(gameWidth*.32,gameHeight*.05,gameWidth*.36,gameHeight*.22);
+    gameCtx.fillStyle="#694d3e";
+    gameCtx.beginPath();
+    gameCtx.moveTo(gameWidth*.28,gameHeight*.08);
+    gameCtx.lineTo(gameWidth*.5,0);
+    gameCtx.lineTo(gameWidth*.72,gameHeight*.08);
+    gameCtx.closePath();
+    gameCtx.fill();
+    gameCtx.fillStyle="#6b3b2a";
+    gameCtx.fillRect(gameWidth*.45,gameHeight*.13,gameWidth*.1,gameHeight*.14);
+
+    const concrete=gameCtx.createLinearGradient(0,gameHeight*.22,0,gameHeight);
+    concrete.addColorStop(0,"#d9dee0");
+    concrete.addColorStop(1,"#a9b2b7");
+    gameCtx.fillStyle=concrete;
+    gameCtx.beginPath();
+    gameCtx.moveTo(gameWidth*.28,gameHeight*.22);
+    gameCtx.lineTo(gameWidth*.72,gameHeight*.22);
+    gameCtx.lineTo(gameWidth,gameHeight);
+    gameCtx.lineTo(0,gameHeight);
+    gameCtx.closePath();
+    gameCtx.fill();
+
+    gameCtx.strokeStyle="rgba(71,85,105,.36)";
+    gameCtx.lineWidth=3;
+    for(let i=1;i<5;i+=1){
+      const y=gameHeight*.22+(gameHeight*.78)*(i/5);
+      gameCtx.beginPath();
+      gameCtx.moveTo(gameWidth*(.28*(1-i/5)),y);
+      gameCtx.lineTo(gameWidth*(1-.28*(1-i/5)),y);
+      gameCtx.stroke();
+    }
+    gameCtx.beginPath();
+    gameCtx.moveTo(gameWidth*.5,gameHeight*.22);
+    gameCtx.lineTo(gameWidth*.5,gameHeight);
+    gameCtx.stroke();
+  }
+
+  if(level.type!=="bin"){
+    for(let i=0;i<180;i+=1){
+      const x=(i*83)%gameWidth;
+      const y=(i*47)%gameHeight;
+      gameCtx.fillStyle=i%3===0?"rgba(255,255,255,.15)":"rgba(51,65,85,.1)";
+      gameCtx.fillRect(x,y,2,2);
+    }
+  }
+}
+
+function addGameTargetPath(ctx){
+  const level=gameLevels[gameLevel];
+  ctx.beginPath();
+  if(level.type==="concrete"){
+    ctx.moveTo(gameWidth*.28,gameHeight*.22);
+    ctx.lineTo(gameWidth*.72,gameHeight*.22);
+    ctx.lineTo(gameWidth,gameHeight);
+    ctx.lineTo(0,gameHeight);
+    ctx.closePath();
+  }else if(level.type==="bin"){
+    const binX=gameWidth*.2;
+    const binY=gameHeight*.12;
+    const binW=gameWidth*.6;
+    const binH=gameHeight*.72;
+    ctx.roundRect(binX,binY,binW,binH*.2,12);
+    ctx.moveTo(binX+binW*.08,binY+binH*.16);
+    ctx.lineTo(binX+binW*.92,binY+binH*.16);
+    ctx.lineTo(binX+binW*.82,binY+binH);
+    ctx.lineTo(binX+binW*.18,binY+binH);
+    ctx.closePath();
+  }else{
+    ctx.rect(0,0,gameWidth,gameHeight);
+  }
+}
+
+function isGameTargetPoint(x,y){
+  const level=gameLevels[gameLevel];
+  if(level.type==="concrete"){
+    const top=gameHeight*.22;
+    if(y<top){
+      return false;
+    }
+    const progress=(y-top)/(gameHeight-top);
+    const left=gameWidth*.28*(1-progress);
+    return x>=left&&x<=gameWidth-left;
+  }
+  if(level.type==="bin"){
+    const binX=gameWidth*.2;
+    const binY=gameHeight*.12;
+    const binW=gameWidth*.6;
+    const binH=gameHeight*.72;
+    if(y<binY||y>binY+binH){
+      return false;
+    }
+    if(y<=binY+binH*.2){
+      return x>=binX&&x<=binX+binW;
+    }
+    const progress=(y-(binY+binH*.16))/(binH*.84);
+    const left=binX+binW*(.08+.1*progress);
+    const right=binX+binW*(.92-.1*progress);
+    return x>=left&&x<=right;
+  }
+  return true;
+}
+
+function drawGame(){
+  gameCtx.clearRect(0,0,gameWidth,gameHeight);
+  drawGameSurface();
+  if(gameDirt){
+    gameCtx.drawImage(gameDirt,0,0,gameWidth,gameHeight);
+  }
+}
+
+function makeGameDirt(){
+  const level=gameLevels[gameLevel];
+  gameDirt=document.createElement("canvas");
+  gameDirt.width=gameCanvas.width;
+  gameDirt.height=gameCanvas.height;
+  gameDirtCtx=gameDirt.getContext("2d");
+  gameDirtCtx.setTransform(gameRatio,0,0,gameRatio,0,0);
+  gameDirtCtx.save();
+  addGameTargetPath(gameDirtCtx);
+  gameDirtCtx.clip();
+  gameDirtCtx.fillStyle=level.dirt;
+  gameDirtCtx.fillRect(0,0,gameWidth,gameHeight);
+
+  for(let i=0;i<64;i+=1){
+    const x=((i*97)%101)/101*gameWidth;
+    const y=((i*53)%103)/103*gameHeight;
+    const radius=24+(i*19)%62;
+    const spot=gameDirtCtx.createRadialGradient(x,y,0,x,y,radius);
+    spot.addColorStop(0,i%2?level.spot:"rgba(105,77,42,.72)");
+    spot.addColorStop(1,"rgba(35,28,20,0)");
+    gameDirtCtx.fillStyle=spot;
+    gameDirtCtx.beginPath();
+    gameDirtCtx.arc(x,y,radius,0,Math.PI*2);
+    gameDirtCtx.fill();
+  }
+
+  gameDirtCtx.strokeStyle=level.type==="siding"?"rgba(36,75,42,.42)":"rgba(45,35,25,.35)";
+  gameDirtCtx.lineWidth=8;
+  gameDirtCtx.lineCap="round";
+  for(let i=0;i<18;i+=1){
+    const x=(i*71)%gameWidth;
+    const y=(i*113)%gameHeight;
+    gameDirtCtx.beginPath();
+    gameDirtCtx.moveTo(x,y);
+    gameDirtCtx.bezierCurveTo(x+18,y+35,x-12,y+60,x+8,y+96);
+    gameDirtCtx.stroke();
+  }
+  gameDirtCtx.restore();
+}
+
+function updateGameProgress(){
+  const rawProgress=cleanedCells.size/gameTargetCells.size*100;
+  const progress=rawProgress>=99?100:Math.round(rawProgress);
+  gameProgress.style.width=progress+"%";
+  gamePercent.textContent=progress+"%";
+
+  if(progress>=100&&!gameWon){
+    gameWon=true;
+    gameWin.classList.add("show");
+    if(gameLevel<gameLevels.length-1){
+      gameWin.textContent=gameLevels[gameLevel].name+" clean! Level "+(gameLevel+2)+" is ready.";
+      gameNext.classList.add("show");
+    }else{
+      gameWin.textContent="All four jobs complete! Wash Master badge unlocked.";
+      gameReward.classList.add("show");
+      document.body.classList.add("game-complete");
+      saveSecretState("gfGameComplete");
+      launchConfetti();
+    }
+  }
+}
+
+function markCleanedCells(x,y,radius){
+  const cellWidth=gameWidth/gameColumns;
+  const cellHeight=gameHeight/gameRows;
+  for(let row=0;row<gameRows;row+=1){
+    for(let column=0;column<gameColumns;column+=1){
+      const cellX=(column+.5)*cellWidth;
+      const cellY=(row+.5)*cellHeight;
+      const cellId=row*gameColumns+column;
+      if(gameTargetCells.has(cellId)&&Math.hypot(cellX-x,cellY-y)<radius){
+        cleanedCells.add(cellId);
+      }
+    }
+  }
+}
+
+function washGameAt(x,y){
+  if(gameWon){
+    return;
+  }
+  const radius=Math.max(30,Math.min(gameWidth,gameHeight)*gameLevels[gameLevel].radius);
+  gameDirtCtx.save();
+  gameDirtCtx.globalCompositeOperation="destination-out";
+  const wash=gameDirtCtx.createRadialGradient(x,y,0,x,y,radius);
+  wash.addColorStop(0,"rgba(0,0,0,1)");
+  wash.addColorStop(.72,"rgba(0,0,0,.92)");
+  wash.addColorStop(1,"rgba(0,0,0,0)");
+  gameDirtCtx.fillStyle=wash;
+  gameDirtCtx.beginPath();
+  gameDirtCtx.arc(x,y,radius,0,Math.PI*2);
+  gameDirtCtx.fill();
+  gameDirtCtx.restore();
+
+  markCleanedCells(x,y,radius*.8);
+  drawGame();
+
+  const handleX=Math.max(36,Math.min(gameWidth-80,x-radius*2.7));
+  const handleY=Math.max(70,Math.min(gameHeight-38,y+radius*1.8));
+  const angle=Math.atan2(y-handleY,x-handleX);
+  const distance=Math.hypot(x-handleX,y-handleY);
+  const tipX=x-Math.cos(angle)*radius*.72;
+  const tipY=y-Math.sin(angle)*radius*.72;
+
+  gameCtx.save();
+  gameCtx.lineCap="round";
+
+  gameCtx.strokeStyle="rgba(7,24,39,.92)";
+  gameCtx.lineWidth=9;
+  gameCtx.beginPath();
+  gameCtx.moveTo(handleX-8,handleY+24);
+  gameCtx.bezierCurveTo(handleX-50,handleY+68,handleX+20,gameHeight+22,handleX+100,gameHeight+18);
+  gameCtx.stroke();
+
+  gameCtx.translate(handleX,handleY);
+  gameCtx.rotate(angle);
+
+  gameCtx.strokeStyle="#cbd5e1";
+  gameCtx.lineWidth=8;
+  gameCtx.beginPath();
+  gameCtx.moveTo(28,0);
+  gameCtx.lineTo(Math.max(38,distance-radius*.72),0);
+  gameCtx.stroke();
+  gameCtx.strokeStyle="rgba(255,255,255,.75)";
+  gameCtx.lineWidth=2;
+  gameCtx.beginPath();
+  gameCtx.moveTo(30,-2);
+  gameCtx.lineTo(Math.max(38,distance-radius*.72),-2);
+  gameCtx.stroke();
+
+  gameCtx.fillStyle="#111827";
+  gameCtx.beginPath();
+  gameCtx.roundRect(-26,-16,62,32,9);
+  gameCtx.fill();
+  gameCtx.fillStyle="#0284c7";
+  gameCtx.beginPath();
+  gameCtx.roundRect(-18,-11,42,16,6);
+  gameCtx.fill();
+
+  gameCtx.fillStyle="#111827";
+  gameCtx.beginPath();
+  gameCtx.moveTo(-8,12);
+  gameCtx.lineTo(17,12);
+  gameCtx.lineTo(9,61);
+  gameCtx.lineTo(-17,57);
+  gameCtx.closePath();
+  gameCtx.fill();
+  gameCtx.fillStyle="#334155";
+  gameCtx.fillRect(-11,22,20,5);
+  gameCtx.fillRect(-13,33,20,5);
+  gameCtx.fillRect(-15,44,20,5);
+
+  gameCtx.strokeStyle="#facc15";
+  gameCtx.lineWidth=4;
+  gameCtx.beginPath();
+  gameCtx.moveTo(8,12);
+  gameCtx.lineTo(21,25);
+  gameCtx.lineTo(24,11);
+  gameCtx.stroke();
+
+  const nozzleX=Math.max(38,distance-radius*.72);
+  gameCtx.fillStyle="#111827";
+  gameCtx.fillRect(nozzleX-2,-7,19,14);
+  gameCtx.fillStyle="#facc15";
+  gameCtx.fillRect(nozzleX+12,-6,10,12);
+  gameCtx.restore();
+
+  gameCtx.save();
+  const spray=gameCtx.createLinearGradient(tipX,tipY,x,y);
+  spray.addColorStop(0,"rgba(255,255,255,.98)");
+  spray.addColorStop(.45,"rgba(186,230,253,.82)");
+  spray.addColorStop(1,"rgba(56,189,248,.15)");
+  const normalX=Math.cos(angle+Math.PI/2);
+  const normalY=Math.sin(angle+Math.PI/2);
+  gameCtx.fillStyle=spray;
+  gameCtx.beginPath();
+  gameCtx.moveTo(tipX,tipY);
+  gameCtx.lineTo(x+normalX*radius*.62,y+normalY*radius*.62);
+  gameCtx.lineTo(x-normalX*radius*.62,y-normalY*radius*.62);
+  gameCtx.closePath();
+  gameCtx.fill();
+  gameCtx.strokeStyle="rgba(255,255,255,.9)";
+  gameCtx.lineWidth=3;
+  for(let i=-2;i<=2;i+=1){
+    gameCtx.beginPath();
+    gameCtx.moveTo(tipX,tipY);
+    gameCtx.lineTo(x+normalX*i*radius*.22,y+normalY*i*radius*.22);
+    gameCtx.stroke();
+  }
+  for(let i=0;i<12;i+=1){
+    const t=(i+1)/13;
+    const dropX=tipX+(x-tipX)*t+normalX*((i%5)-2)*radius*.13;
+    const dropY=tipY+(y-tipY)*t+normalY*((i%5)-2)*radius*.13;
+    gameCtx.fillStyle="rgba(224,242,254,.85)";
+    gameCtx.beginPath();
+    gameCtx.arc(dropX,dropY,1.5+(i%3),0,Math.PI*2);
+    gameCtx.fill();
+  }
+  gameCtx.restore();
+  updateGameProgress();
+}
+
+function gamePoint(event){
+  const rect=gameCanvas.getBoundingClientRect();
+  return {
+    x:(event.clientX-rect.left)/rect.width*gameWidth,
+    y:(event.clientY-rect.top)/rect.height*gameHeight
+  };
+}
+
+function initWashGame(resetLevel=false){
+  if(resetLevel){
+    gameLevel=0;
+  }
+  const rect=gameCanvas.getBoundingClientRect();
+  gameRatio=window.devicePixelRatio||1;
+  gameWidth=Math.max(320,Math.round(rect.width));
+  gameHeight=Math.max(260,Math.round(rect.height));
+  gameCanvas.width=gameWidth*gameRatio;
+  gameCanvas.height=gameHeight*gameRatio;
+  gameCtx.setTransform(gameRatio,0,0,gameRatio,0,0);
+  cleanedCells=new Set();
+  gameTargetCells=new Set();
+  const cellWidth=gameWidth/gameColumns;
+  const cellHeight=gameHeight/gameRows;
+  for(let row=0;row<gameRows;row+=1){
+    for(let column=0;column<gameColumns;column+=1){
+      if(isGameTargetPoint((column+.5)*cellWidth,(row+.5)*cellHeight)){
+        gameTargetCells.add(row*gameColumns+column);
+      }
+    }
+  }
+  gameWon=false;
+  gameProgress.style.width="0%";
+  gamePercent.textContent="0%";
+  gameLevelLabel.textContent="Level "+(gameLevel+1)+" of "+gameLevels.length+": "+gameLevels[gameLevel].name;
+  gameWin.classList.remove("show");
+  gameReward.classList.remove("show");
+  gameNext.classList.remove("show");
+  gameSkip.classList.remove("show");
+  clearTimeout(gameSkipTimer);
+  makeGameDirt();
+  drawGame();
+}
+
+function launchConfetti(){
+  const colors=["#0284c7","#38bdf8","#bae6fd","#ffffff","#facc15"];
+  for(let i=0;i<72;i+=1){
+    const piece=document.createElement("span");
+    piece.className="confetti-piece";
+    piece.style.left=Math.random()*100+"vw";
+    piece.style.background=colors[i%colors.length];
+    piece.style.setProperty("--drift",(Math.random()*220-110)+"px");
+    piece.style.animationDelay=Math.random()*.45+"s";
+    piece.style.animationDuration=1.9+Math.random()*1.1+"s";
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(),3400);
+  }
+}
+
+gameCanvas.addEventListener("pointerdown",event=>{
+  gameCleaning=true;
+  gameCanvas.setPointerCapture(event.pointerId);
+  const point=gamePoint(event);
+  washGameAt(point.x,point.y);
+});
+
+gameCanvas.addEventListener("pointermove",event=>{
+  if(!gameCleaning){
+    return;
+  }
+  const point=gamePoint(event);
+  washGameAt(point.x,point.y);
+});
+
+gameCanvas.addEventListener("pointerup",()=>gameCleaning=false);
+gameCanvas.addEventListener("pointercancel",()=>gameCleaning=false);
+
+gameLaunch.addEventListener("click",()=>{
+  document.body.classList.add("game-open");
+  gameOverlay.setAttribute("aria-hidden","false");
+  requestAnimationFrame(()=>initWashGame(true));
+});
+
+function closeWashGame(){
+  document.body.classList.remove("game-open");
+  gameOverlay.setAttribute("aria-hidden","true");
+  gameCleaning=false;
+}
+
+gameClose.addEventListener("click",closeWashGame);
+gameReset.addEventListener("click",()=>initWashGame(false));
+gameReset.addEventListener("dblclick",event=>{
+  event.preventDefault();
+  gameSkip.textContent=gameLevel===gameLevels.length-1?"Finish Game":"Skip Level";
+  gameSkip.classList.add("show");
+  clearTimeout(gameSkipTimer);
+  gameSkipTimer=setTimeout(()=>gameSkip.classList.remove("show"),6000);
+});
+gameNext.addEventListener("click",()=>{
+  if(gameLevel<gameLevels.length-1){
+    gameLevel+=1;
+    initWashGame(false);
+  }
+});
+gameSkip.addEventListener("click",()=>{
+  if(gameLevel<gameLevels.length-1){
+    gameLevel+=1;
+    initWashGame(false);
+    return;
+  }
+
+  gameWon=true;
+  gameProgress.style.width="100%";
+  gamePercent.textContent="100%";
+  gameWin.textContent="All four jobs complete! Wash Master badge unlocked.";
+  gameWin.classList.add("show");
+  gameReward.classList.add("show");
+  gameSkip.classList.remove("show");
+  document.body.classList.add("game-complete");
+  saveSecretState("gfGameComplete");
+  launchConfetti();
+});
+gameOverlay.addEventListener("click",event=>{
+  if(event.target===gameOverlay){
+    closeWashGame();
+  }
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"&&document.body.classList.contains("game-open")){
+    closeWashGame();
+  }
+});
+
+loadSecretState();
+
+function startPressureWasher(){
+  cancelAnimationFrame(cleanAnimation);
+  const ratio=window.devicePixelRatio||1;
+  const width=window.innerWidth;
+  const height=window.innerHeight;
+  cleanCanvas.width=width*ratio;
+  cleanCanvas.height=height*ratio;
+  cleanCanvas.style.width=width+"px";
+  cleanCanvas.style.height=height+"px";
+  cleanCtx.setTransform(ratio,0,0,ratio,0,0);
+
+  const grime=document.createElement("canvas");
+  grime.width=cleanCanvas.width;
+  grime.height=cleanCanvas.height;
+  const grimeCtx=grime.getContext("2d");
+  grimeCtx.setTransform(ratio,0,0,ratio,0,0);
+
+  grimeCtx.fillStyle="rgba(55,44,34,.18)";
+  grimeCtx.fillRect(0,0,width,height);
+
+  for(let i=0;i<38;i+=1){
+    const x=(Math.sin(i*12.9898)*43758.5453%1+1)%1*width;
+    const y=(Math.sin(i*78.233)*24634.6345%1+1)%1*height;
+    const r=34+((i*17)%72);
+    const spot=grimeCtx.createRadialGradient(x,y,0,x,y,r);
+    spot.addColorStop(0,"rgba(70,52,35,.36)");
+    spot.addColorStop(.62,"rgba(70,52,35,.2)");
+    spot.addColorStop(1,"rgba(70,52,35,0)");
+    grimeCtx.fillStyle=spot;
+    grimeCtx.beginPath();
+    grimeCtx.arc(x,y,r,0,Math.PI*2);
+    grimeCtx.fill();
+  }
+
+  const path=[
+    {x:-80,y:height*.22},
+    {x:width*.28,y:height*.18},
+    {x:width*.72,y:height*.34},
+    {x:width*.2,y:height*.56},
+    {x:width*.84,y:height*.74},
+    {x:width+120,y:height*.86}
+  ];
+  const duration=4300;
+  const started=performance.now();
+
+  function pointAt(t){
+    const scaled=t*(path.length-1);
+    const index=Math.min(path.length-2,Math.floor(scaled));
+    const local=scaled-index;
+    const a=path[index];
+    const b=path[index+1];
+    return {
+      x:a.x+(b.x-a.x)*local,
+      y:a.y+(b.y-a.y)*local,
+      angle:Math.atan2(b.y-a.y,b.x-a.x)
+    };
+  }
+
+  function frame(now){
+    const progress=Math.min(1,(now-started)/duration);
+    const p=pointAt(progress);
+    const sprayLength=Math.min(width,height)*.32;
+    const sprayWidth=Math.min(width,height)*.18;
+    const tipX=p.x+Math.cos(p.angle)*34;
+    const tipY=p.y+Math.sin(p.angle)*34;
+    const endX=tipX+Math.cos(p.angle)*sprayLength;
+    const endY=tipY+Math.sin(p.angle)*sprayLength;
+
+    grimeCtx.save();
+    grimeCtx.globalCompositeOperation="destination-out";
+    const clean=grimeCtx.createRadialGradient(endX,endY,0,endX,endY,sprayWidth);
+    clean.addColorStop(0,"rgba(0,0,0,.95)");
+    clean.addColorStop(.62,"rgba(0,0,0,.55)");
+    clean.addColorStop(1,"rgba(0,0,0,0)");
+    grimeCtx.fillStyle=clean;
+    grimeCtx.beginPath();
+    grimeCtx.arc(endX,endY,sprayWidth,0,Math.PI*2);
+    grimeCtx.fill();
+    grimeCtx.restore();
+
+    cleanCtx.clearRect(0,0,width,height);
+    cleanCtx.drawImage(grime,0,0,width,height);
+
+    cleanCtx.save();
+    cleanCtx.globalAlpha=.95;
+    const spray=cleanCtx.createLinearGradient(tipX,tipY,endX,endY);
+    spray.addColorStop(0,"rgba(255,255,255,.95)");
+    spray.addColorStop(.45,"rgba(125,211,252,.75)");
+    spray.addColorStop(1,"rgba(125,211,252,0)");
+    cleanCtx.strokeStyle=spray;
+    cleanCtx.lineWidth=22;
+    cleanCtx.lineCap="round";
+    cleanCtx.beginPath();
+    cleanCtx.moveTo(tipX,tipY);
+    cleanCtx.lineTo(endX,endY);
+    cleanCtx.stroke();
+
+    cleanCtx.strokeStyle="rgba(255,255,255,.75)";
+    cleanCtx.lineWidth=5;
+    for(let i=-2;i<=2;i+=1){
+      cleanCtx.beginPath();
+      cleanCtx.moveTo(tipX,tipY);
+      cleanCtx.lineTo(
+        endX+Math.cos(p.angle+Math.PI/2)*i*sprayWidth*.18,
+        endY+Math.sin(p.angle+Math.PI/2)*i*sprayWidth*.18
+      );
+      cleanCtx.stroke();
+    }
+
+    cleanCtx.translate(p.x,p.y);
+    cleanCtx.rotate(p.angle);
+    cleanCtx.fillStyle="#0f172a";
+    cleanCtx.fillRect(-58,-8,72,16);
+    cleanCtx.fillStyle="#0284c7";
+    cleanCtx.fillRect(10,-5,32,10);
+    cleanCtx.fillStyle="#111";
+    cleanCtx.fillRect(-54,6,22,26);
+    cleanCtx.restore();
+
+    if(progress<1){
+      cleanAnimation=requestAnimationFrame(frame);
+    }else{
+      setTimeout(()=>cleanCtx.clearRect(0,0,width,height),350);
+    }
+  }
+
+  cleanAnimation=requestAnimationFrame(frame);
+}
+
+logo.addEventListener("click",event=>{
+  event.preventDefault();
+  secretTaps+=1;
+  clearTimeout(secretTapTimer);
+  clearTimeout(logoNavTimer);
+
+  if(secretTaps>=3){
+    secretTaps=0;
+    document.body.classList.add("pressure-mode","game-unlocked");
+    secretToast.classList.add("show");
+    startPressureWasher();
+
+    setTimeout(()=>{
+      secretToast.classList.remove("show");
+      document.body.classList.remove("pressure-mode");
+      cleanCtx.clearRect(0,0,cleanCanvas.width,cleanCanvas.height);
+    },4800);
+    return;
+  }
+
+  logoNavTimer=setTimeout(()=>{
+    if(secretTaps===1){
+      document.querySelector("#top").scrollIntoView({behavior:"smooth"});
+      history.replaceState(null,"","#top");
+    }
+    secretTaps=0;
+  },420);
+
+  secretTapTimer=setTimeout(()=>{
+    secretTaps=0;
+  },620);
 });
 
 const statNumbers=document.querySelectorAll(".stat-number[data-count]");
